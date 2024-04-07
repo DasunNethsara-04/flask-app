@@ -1,3 +1,50 @@
 {% extends 'index.html' %} {% block content %}
-<h1 class="display-4">Login</h1>
+
+<div class="d-flex align-items-center justify-content-center vh-100">
+  <div class="mx-auto p-4 bg-white shadow-lg">
+    <div class="card w-100 mb-3">
+      <div class="card-body">
+        <h3 class="card-title text-center">Login Now!</h3>
+        <p class="card-text">
+          To access your account, please sign in using your credentials below
+        </p>
+        <form class="mt-4">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Email address</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Password</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+          <div class="mb-3 form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="exampleCheck1"
+            />
+            <label class="form-check-label" for="exampleCheck1"
+              >Check me out</label
+            >
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
