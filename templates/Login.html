@@ -8,7 +8,7 @@
         <p class="card-text">
           To access your account, please sign in using your credentials below
         </p>
-        <form class="mt-4">
+        <form class="mt-4" method="post">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
               >Email address</label
@@ -17,7 +17,7 @@
               type="email"
               class="form-control"
               id="exampleInputEmail1"
-              aria-describedby="emailHelp"
+              name="email"
             />
           </div>
           <div class="mb-3">
@@ -28,6 +28,7 @@
               type="password"
               class="form-control"
               id="exampleInputPassword1"
+              name="password"
             />
           </div>
           <button type="submit" class="btn btn-primary">Login</button>
