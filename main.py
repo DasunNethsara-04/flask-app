@@ -29,7 +29,8 @@ def login():
 @app.route("/<usr_data>")
 def test(usr_data):
     return usr_data
-@app.route("/register")
+
+@app.route("/register", methods=['POST', 'GET'])
 def register():
     return render_template("Register.html")
 
