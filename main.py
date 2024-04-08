@@ -1,8 +1,17 @@
 # imports
+import os
+from dotenv import load_dotenv, dotenv_values 
 from flask import Flask, render_template, redirect, request, url_for
+from werkzeug.security import generate_password_hash, gen_salt, check_password_hash
+
+# loading variables from .env file
+load_dotenv()
 
 # initialize the flask app
 app: Flask = Flask(__name__)
+
+# configs for Flask App
+app.config['SECRET_KEY'] = os.getenv("FLASK_SECRET_KEY")
 
 @app.route("/")
 def home():
