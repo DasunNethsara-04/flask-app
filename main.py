@@ -1,7 +1,6 @@
 # imports
-
 from dotenv import load_dotenv, dotenv_values 
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, session, url_for, sessions
 from flask_bcrypt import Bcrypt
 from db_connection import cursor, conn
 import os
@@ -50,6 +49,8 @@ def login():
             if len(result) > 0:
                 #user exists
                 if bcrypt.check_password_hash(result[3], str(usr_pwd)):
+                    session['EMAIL'] = usr_email
+                    session['IS_LOGGED_IN'] = True
                     return redirect(url_for("adminPage", success="Login Success"))
                 else:
                     return render_template("Login.html", error="Invalid Password")

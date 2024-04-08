@@ -6,8 +6,10 @@
     icon: "success",
   });
 </script>
-{% endif %}
-
-<h1 class="dispaly-3">Admin Page</h1>
-
-{% endblock %}
+{% endif %} {% if session['IS_LOGGED_IN'] == True %}
+<h1 class="display-3">Admin Page</h1>
+{% else %} {% set url = url_for("login") %}
+<script>
+  window.location.href = "{{ url }}";
+</script>
+{% endif %} {% endblock %}
