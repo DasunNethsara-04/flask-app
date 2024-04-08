@@ -1,5 +1,4 @@
-{% extends 'index.html' %} {% block content %} 
-{% if error %}
+{% extends 'index.html' %} {% block content %} {% if error %}
 <script>
   Swal.fire({
     title: "Opps!",
@@ -53,6 +52,9 @@
             />
           </div>
           <button type="submit" class="btn btn-primary">Register</button>
+          <a href="{{ url_for('login' ) }}" class="btn btn-link"
+            >I have an account</a
+          >
         </form>
       </div>
     </div>

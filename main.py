@@ -2,7 +2,7 @@
 
 from dotenv import load_dotenv, dotenv_values 
 from flask import Flask, render_template, redirect, request, url_for
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_bcrypt import Bcrypt
 from db_connection import cursor, conn
 import os
 from datetime import datetime
@@ -17,6 +17,7 @@ load_dotenv()
 
 # initialize the flask app
 app: Flask = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 # configs for Flask App
 app.config['SECRET_KEY'] = os.getenv("FLASK_SECRET_KEY")
@@ -33,19 +34,33 @@ def about_us():
 def contact_us():
     return render_template("Contact.html")
 
+@app.route("/<usr_data>")
+def test(usr_data):
+    return usr_data
+
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         usr_email = request.form['email']
         usr_pwd = request.form['password']
-        # return redirect(url_for("test", usr_data=usr_email))
+        sql = "SELECT * FROM user_tbl WHERE email=%s"
+        cursor.execute(sql, (usr_email, ))
+        try:
+            result = cursor.fetchone()
+            if len(result) > 0:
+                #user exists
+                if bcrypt.check_password_hash(result[3], str(usr_pwd)):
+                    return redirect(url_for("adminPage", success="Login Success"))
+                else:
+                    return render_template("Login.html", error="Invalid Password")
+            else:
+                # user not found
+                return render_template("Login.html", error="User Not Found")
+        except TypeError:
+            return render_template("Login.html", error="User Not Found")
         
     else:
         return render_template("Login.html")
-
-@app.route("/<usr_data>")
-def test(usr_data):
-    return usr_data
 
 @app.route("/register", methods=['POST', 'GET'])
 def register():
@@ -59,7 +74,7 @@ def register():
             # ready to insert data
             #hashing the password
             status = 1
-            hashed_password = generate_password_hash(usr_pwd, "pbkdf2", 10)
+            hashed_password = bcrypt.generate_password_hash(usr_pwd)
             sql = "INSERT INTO user_tbl (name, email, password, date_added, status) VALUES (%s, %s, %s, %s, %s)"
             cursor.execute(sql, (usr_name, usr_email, hashed_password, current_date(), status))
             conn.commit()
@@ -76,6 +91,10 @@ def register():
     else:
         return render_template("Register.html")
 
+
+@app.route("/admin")
+def adminPage():
+    return render_template("Pages/Admin.html")
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

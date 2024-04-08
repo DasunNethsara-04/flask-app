@@ -1,0 +1,13 @@
+{% extends 'index.html' %} {% block content %} {% if success %}
+<script>
+  Swal.fire({
+    title: "Done",
+    text: "{{ success }}",
+    icon: "success",
+  });
+</script>
+{% endif %}
+
+<h1 class="dispaly-3">Admin Page</h1>
+
+{% endblock %}

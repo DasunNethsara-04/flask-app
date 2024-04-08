@@ -6,6 +6,14 @@
     icon: "success",
   });
 </script>
+{% endif %} {% if error %}
+<script>
+  Swal.fire({
+    title: "Opps!",
+    text: "{{ error }}",
+    icon: "warning",
+  });
+</script>
 {% endif %}
 
 <div class="d-flex align-items-center justify-content-center vh-100">
@@ -26,6 +34,7 @@
               class="form-control"
               id="exampleInputEmail1"
               name="email"
+              required
             />
           </div>
           <div class="mb-3">
@@ -37,9 +46,13 @@
               class="form-control"
               id="exampleInputPassword1"
               name="password"
+              required
             />
           </div>
           <button type="submit" class="btn btn-primary">Login</button>
+          <a href="{{ url_for('register' ) }}" class="btn btn-link"
+            >I don't have an account</a
+          >
         </form>
       </div>
     </div>
