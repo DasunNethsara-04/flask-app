@@ -1,4 +1,12 @@
-{% extends 'index.html' %} {% block content %}
+{% extends 'index.html' %} {% block content %} {% if success %}
+<script>
+  Swal.fire({
+    title: "Done",
+    text: "{{ success }}",
+    icon: "success",
+  });
+</script>
+{% endif %}
 
 <div class="d-flex align-items-center justify-content-center vh-100">
   <div class="mx-auto p-4 bg-white shadow-lg">
