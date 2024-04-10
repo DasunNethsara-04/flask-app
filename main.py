@@ -51,7 +51,7 @@ def login():
                 if bcrypt.check_password_hash(result[3], str(usr_pwd)):
                     session['EMAIL'] = usr_email
                     session['IS_LOGGED_IN'] = True
-                    return redirect(url_for("adminPage"))
+                    return redirect(url_for("admin_dashboard"))
                 else:
                     return render_template("Login.html", error="Invalid Password")
             else:
@@ -92,6 +92,11 @@ def register():
     else:
         return render_template("Register.html")
 
+@app.route('/logout')
+def logout():
+    session.pop('EMAIL',None)
+    session.pop('IS_LOGGED_IN',None)
+    return redirect(url_for('login'))
 
 @app.route("/admin")
 def adminPage():
