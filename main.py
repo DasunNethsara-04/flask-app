@@ -100,7 +100,7 @@ def logout():
 
 @app.route("/admin")
 def adminPage():
-    return render_template("Admin.html")
+    return render_template("Pages/dashboard.html")
 
 @app.route("/admin/dashboard")
 def admin_dashboard():
