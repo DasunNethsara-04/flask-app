@@ -1,6 +1,6 @@
-{% if session['IS_LOGGED_IN'] != True %}
+{% if session['IS_LOGGED_IN'] != True %} {% set url = url_for("login") %}
 <script>
-  window.location.href = "{{ login }}";
+  window.location.href = "{{ url }}";
 </script>
 {% endif %}
 
