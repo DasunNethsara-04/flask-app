@@ -3,8 +3,8 @@ from dotenv import load_dotenv, dotenv_values
 from flask import Flask, render_template, redirect, request, session, url_for, sessions
 from flask_bcrypt import Bcrypt
 from db_connection import cursor, conn
-import os
 from datetime import datetime
+import os
 
 
 # FUNCTIONS
