@@ -1,0 +1,42 @@
+{% extends 'Admin.html' %}
+
+<!-- content goes here. do not remove any code -->
+{% block content %}
+<div class="container-fluid">
+  <h1 class="mt-4">All Users</h1>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Date Added</th>
+              <th scope="col">Controls</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- python code -->
+            {% for item in users %}
+            <tr>
+              <td>{{ item[1] }}</td>
+              <td>{{ item[2] }}</td>
+              <td>{{ item[4] }}</td>
+              <td>
+                <a type="button" class="btn btn-info">Profile</a>
+                <a type="button" class="btn btn-warning">Update</a>
+                <a type="button" class="btn btn-danger">Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Your further code goes here. keep coding in this div -->
+</div>
+{% endblock %}

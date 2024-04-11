@@ -106,6 +106,12 @@ def adminPage():
 def admin_dashboard():
     return render_template("Pages/dashboard.html")
 
+@app.route("/admin/show-users")
+def show_users():
+    sql  = "SELECT * FROM user_tbl WHERE status=1"
+    cursor.execute(sql)
+    return render_template("Pages/show_users.html", users=cursor.fetchall())
+
 @app.errorhandler(404)
 def page_not_found(err):
     return render_template("404.html"), 404
