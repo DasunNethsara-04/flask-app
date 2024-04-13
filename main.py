@@ -1,6 +1,6 @@
 # imports
 from dotenv import load_dotenv
-from flask import Flask, render_template, redirect, request, session, url_for, sessions
+from flask import Flask, render_template, redirect, request, session, url_for, sessions, flash
 from flask_bcrypt import Bcrypt
 from db_connection import cursor, conn
 from datetime import datetime
@@ -120,21 +120,22 @@ def add_user():
         user_email = request.form['email']
         status = 1
         role = "User"
-        sql = "SELECT COUNT(*) AS c FROM user_tbl WHERE email=%s"
-        cursor.execute(sql, (user_name, ))
-        if cursor.fetchone()[0] < 1:
+        sql = "SELECT COUNT(*) FROM user_tbl WHERE email=%s"
+        cursor.execute(sql, (user_email, ))
+        if int(cursor.fetchone()[0]) < 1:
             sql = "INSERT INTO user_tbl (name, email, date_added, status, user_role) VALUES (%s, %s, %s, %s, %s)"
             cursor.execute(sql, (user_name, user_email, current_date(), status, role))
             conn.commit()
 
             if cursor.rowcount == 1:
-                return render_template("Pages/add-user.html", success=f"{user_name} Registered Successfully!")
+                flash(f"{user_name} registered successfully!")
             else:
-                return render_template("Pages/add-user.html", error="Error occurred while performing the operation")
+                flash("Error occurred while performing the operation")
+            return render_template("Pages/add-user.html")
         else:
             # already exists
-            warning_message = f"{user_name} alredy exists!"
-            return render_template("Pages/add-user.html", error=warning_message)
+            flash(f"{user_email} already exists")
+        return render_template("Pages/add-user.html")
     else:
         return render_template("Pages/add-user.html")
 

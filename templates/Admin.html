@@ -2,6 +2,22 @@
 <script>
   window.location.href = "{{ url }}";
 </script>
+{% endif %} {% if success %}
+<script>
+  Swal.fire({
+    title: "Done",
+    text: "{{ success }}",
+    icon: "success",
+  });
+</script>
+{% endif %} {% if error %}
+<script>
+  Swal.fire({
+    title: "Opps!",
+    text: "{{ error }}",
+    icon: "warning",
+  });
+</script>
 {% endif %}
 
 <!DOCTYPE html>

@@ -1,20 +1,4 @@
-{% extends 'Admin.html' %} {% if success %}
-<script>
-  Swal.fire({
-    title: "Done",
-    text: "{{ success }}",
-    icon: "success",
-  });
-</script>
-{% endif %} {% if error %}
-<script>
-  Swal.fire({
-    title: "Opps!",
-    text: "{{ error }}",
-    icon: "warning",
-  });
-</script>
-{% endif %}
+{% extends 'Admin.html' %}
 
 <!-- content goes here. do not remove any code -->
 {% block content %}
