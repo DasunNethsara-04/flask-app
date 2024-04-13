@@ -1,4 +1,20 @@
-{% extends 'Admin.html' %}
+{% extends 'Admin.html' %} {% if success %}
+<script>
+  Swal.fire({
+    title: "Done",
+    text: "{{ success }}",
+    icon: "success",
+  });
+</script>
+{% endif %} {% if error %}
+<script>
+  Swal.fire({
+    title: "Opps!",
+    text: "{{ error }}",
+    icon: "warning",
+  });
+</script>
+{% endif %}
 
 <!-- content goes here. do not remove any code -->
 {% block content %}
@@ -13,6 +29,7 @@
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Email</th>
+              <th scope="col">Role</th>
               <th scope="col">Date Added</th>
               <th scope="col">Controls</th>
             </tr>
@@ -24,6 +41,7 @@
               <td>{{ item[1] }}</td>
               <td>{{ item[2] }}</td>
               <td>{{ item[4] }}</td>
+              <td>{{ item[5] }}</td>
               <td>
                 <a type="button" class="btn btn-info">Profile</a>
                 <a type="button" class="btn btn-warning">Update</a>

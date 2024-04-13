@@ -1,5 +1,5 @@
 # imports
-from dotenv import load_dotenv, dotenv_values 
+from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, request, session, url_for, sessions
 from flask_bcrypt import Bcrypt
 from db_connection import cursor, conn
@@ -75,9 +75,10 @@ def register():
             # ready to insert data
             #hashing the password
             status = 1
+            role = "Admin"
             hashed_password = bcrypt.generate_password_hash(usr_pwd)
-            sql = "INSERT INTO user_tbl (name, email, password, date_added, status) VALUES (%s, %s, %s, %s, %s)"
-            cursor.execute(sql, (usr_name, usr_email, hashed_password, current_date(), status))
+            sql = "INSERT INTO user_tbl (name, email, password, date_added, status, user_role) VALUES (%s, %s, %s, %s, %s, %s)"
+            cursor.execute(sql, (usr_name, usr_email, hashed_password, current_date(), status, role))
             conn.commit()
             if cursor.rowcount == 1:
                 return render_template("Login.html", success=f"{usr_name} Registered Successfully!")
@@ -108,9 +109,34 @@ def admin_dashboard():
 
 @app.route("/admin/show-users")
 def show_users():
-    sql  = "SELECT * FROM user_tbl WHERE status=1"
+    sql  = "SELECT * FROM user_tbl WHERE status=1 AND user_role='User'"
     cursor.execute(sql)
     return render_template("Pages/show_users.html", users=cursor.fetchall())
+
+@app.route("/admin/add-user", methods=['POST', 'GET'])
+def add_user():
+    if request.method == 'POST':
+        user_name = request.form['name']
+        user_email = request.form['email']
+        status = 1
+        role = "User"
+        sql = "SELECT COUNT(*) AS c FROM user_tbl WHERE email=%s"
+        cursor.execute(sql, (user_name, ))
+        if cursor.fetchone()[0] < 1:
+            sql = "INSERT INTO user_tbl (name, email, date_added, status, user_role) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(sql, (user_name, user_email, current_date(), status, role))
+            conn.commit()
+
+            if cursor.rowcount == 1:
+                return render_template("Pages/add-user.html", success=f"{user_name} Registered Successfully!")
+            else:
+                return render_template("Pages/add-user.html", error="Error occurred while performing the operation")
+        else:
+            # already exists
+            warning_message = f"{user_name} alredy exists!"
+            return render_template("Pages/add-user.html", error=warning_message)
+    else:
+        return render_template("Pages/add-user.html")
 
 @app.errorhandler(404)
 def page_not_found(err):
