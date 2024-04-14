@@ -162,7 +162,9 @@ def edit_user(user_id):
 
 @app.route("/admin/profile/<user_id>")
 def profile(user_id):
-    return render_template("Pages/user-profile.html")
+    sql  = "SELECT * FROM user_tbl WHERE user_id='"+user_id+"'"
+    cursor.execute(sql)
+    return render_template("Pages/user-profile.html", user=cursor.fetchone())
 
 
 # error handlers

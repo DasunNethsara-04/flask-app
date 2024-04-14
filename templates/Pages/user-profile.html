@@ -4,5 +4,77 @@
 <!-- page content -->
 <div class="conatiner-fluid">
   <h1 class="mt-4">User Profile</h1>
+
+  <div class="container mt-5 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <div class="row">
+      <div class="col-sm-12 col-lg-4 vh-50">
+        <div class="bg-body-tertiary rounded text-center">
+          <img
+            src="{{ url_for('static', filename='imgs/man-300x300.png' ) }}"
+            class="img-fluid mt-5"
+            alt="..."
+            style="border-radius: 50%"
+            width="150"
+          />
+          <h3 class="form- mt-3">{{ user[1] }}</h3>
+          <p class="lead">{{ user[4] }}</p>
+        </div>
+      </div>
+      <div class="col-sm-12 col-lg-8 vh-50">
+        <div class="bg-body-tertiary rounded">
+          <div class="row mt-5">
+            <div class="col-sm-12 col-lg-6">
+              <!-- first col -->
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{ user[1] }}"
+                  readonly
+                />
+              </div>
+              <div class="mb-3">
+                <label for="name" class="form-label">Date Joined</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{ user[5] }}"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="col-sm-12 col-lg-6">
+              <!-- second col -->
+              <div class="mb-3">
+                <label for="name" class="form-label">Email</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{ user[2] }}"
+                  readonly
+                />
+              </div>
+              <div class="mb-3">
+                <label for="name" class="form-label">Date Updated</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{ user[6] if user[6] != None else 'N/A' }}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <a
+            href="{{ url_for('edit_user', user_id=user[0] ) }}"
+            class="btn btn-warning"
+            >Edit User</a
+          >
+          <a href="#" class="btn btn-danger">Delete User</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
