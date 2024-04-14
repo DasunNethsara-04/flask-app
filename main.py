@@ -8,7 +8,7 @@ import os
 
 
 # FUNCTIONS
-def current_date():
+def current_date() -> str:
     return datetime.now().strftime("%Y-%m-%d")
 
 # loading variables from .env file
@@ -16,11 +16,12 @@ load_dotenv()
 
 # initialize the flask app
 app: Flask = Flask(__name__)
-bcrypt = Bcrypt(app)
+bcrypt:Bcrypt = Bcrypt(app)
 
 # configs for Flask App
 app.config['SECRET_KEY'] = os.getenv("FLASK_SECRET_KEY")
 
+# routers
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -139,10 +140,21 @@ def add_user():
     else:
         return render_template("Pages/add-user.html")
 
-@app.route("/admin/edit-user/<user_id>")
+@app.route("/admin/edit-user/<user_id>", methods=['POST', 'GET'])
 def edit_user(user_id):
     if request.method == 'POST':
-        pass
+        user_name = request.form['name']
+        user_email = request.form['email']
+        sql = "UPDATE user_tbl SET name=%s, email=%s, date_updated=%s WHERE user_id='"+user_id+"'"
+        cursor.execute(sql, (user_name, user_email, current_date()))
+        conn.commit()
+        if cursor.rowcount == 1:
+            flash(f"{user_name} updated successfully!")
+        else:
+            flash("Error occurred while performing the operation")
+        sql = f"SELECT * FROM user_tbl WHERE user_id='{user_id}'"
+        cursor.execute(sql)
+        return render_template("Pages/edit-user.html", user=cursor.fetchone())
     else:
         sql = f"SELECT * FROM user_tbl WHERE user_id='{user_id}'"
         cursor.execute(sql)
@@ -166,5 +178,7 @@ def page_not_found(err):
 def server_error(err):
     return render_template("500.html"), 500
 
+
+# run the Flask app
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
