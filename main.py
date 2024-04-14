@@ -139,6 +139,20 @@ def add_user():
     else:
         return render_template("Pages/add-user.html")
 
+@app.route("/admin/edit-user/<user_id>")
+def edit_user(user_id):
+    return render_template("Pages/edit-user.html")
+
+@app.route("/admin/profile/<user_id>")
+def profile(user_id):
+    return render_template("Pages/user-profile.html")
+
+
+# error handlers
+@app.errorhandler(401)
+def bad_request(err):
+    return render_template("401.html"), 401
+
 @app.errorhandler(404)
 def page_not_found(err):
     return render_template("404.html"), 404

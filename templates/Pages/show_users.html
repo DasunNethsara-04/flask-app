@@ -27,9 +27,19 @@
               <td>{{ item[4] }}</td>
               <td>{{ item[5] }}</td>
               <td>
-                <a type="button" class="btn btn-info">Profile</a>
-                <a type="button" class="btn btn-warning">Update</a>
-                <a type="button" class="btn btn-danger">Delete</a>
+                <a
+                  type="button"
+                  class="btn btn-info"
+                  href="{{ url_for('profile', user_id=item[0] ) }}"
+                  >Profile</a
+                >
+                <a
+                  type="button"
+                  class="btn btn-warning"
+                  href="{{ url_for('edit_user', user_id=item[0] ) }}"
+                  >Update</a
+                >
+                <a type="button" class="btn btn-danger" href="">Delete</a>
               </td>
             </tr>
             {% endfor %}
