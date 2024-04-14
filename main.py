@@ -1,6 +1,6 @@
 # imports
 from dotenv import load_dotenv
-from flask import Flask, render_template, redirect, request, session, url_for, sessions, flash
+from flask import Flask, render_template, redirect, request, session, url_for, flash
 from flask_bcrypt import Bcrypt
 from db_connection import cursor, conn
 from datetime import datetime
@@ -141,7 +141,12 @@ def add_user():
 
 @app.route("/admin/edit-user/<user_id>")
 def edit_user(user_id):
-    return render_template("Pages/edit-user.html")
+    if request.method == 'POST':
+        pass
+    else:
+        sql = f"SELECT * FROM user_tbl WHERE user_id='{user_id}'"
+        cursor.execute(sql)
+        return render_template("Pages/edit-user.html", user=cursor.fetchone())
 
 @app.route("/admin/profile/<user_id>")
 def profile(user_id):

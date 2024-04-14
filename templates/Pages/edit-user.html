@@ -1,8 +1,72 @@
 {% extends 'Admin.html' %}
-<!-- block -->
+
+<!-- content goes here. do not remove any code -->
 {% block content %}
-<!-- page content -->
-<div class="conatiner-fluid">
+<div class="container-fluid">
   <h1 class="mt-4">Edit User</h1>
+
+  <div class="container mt-5">
+    {% for message in get_flashed_messages() %} {% if 'successfully' in
+    message%}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% else %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% endif %} {% endfor %}
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <form method="post">
+        <div class="mb-3">
+          <label for="exampleInputName" class="form-label">Your Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputName"
+            aria-describedby="nameHelp"
+            placeholder="Enter Name"
+            name="name"
+            value="{{ user[1] }}"
+          />
+          <small id="nameHelp" class="form-text text-muted"
+            >We'll never share your email with anyone else.</small
+          >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Enter email"
+            name="email"
+            value="{{ user[2] }}"
+          />
+          <small id="emailHelp" class="form-text text-muted"
+            >We'll never share your email with anyone else.</small
+          >
+        </div>
+        <button type="submit" class="btn btn-outline-success">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Your further code goes here. keep coding in this div -->
 </div>
 {% endblock %}
