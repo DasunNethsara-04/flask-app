@@ -160,6 +160,17 @@ def edit_user(user_id):
         cursor.execute(sql)
         return render_template("Pages/edit-user.html", user=cursor.fetchone())
 
+@app.route("/admin/delete-user/<user_id>")
+def delete_user(user_id):
+    sql  = "UPDATE user_tbl SET status=0 WHERE user_id='"+user_id+"'"
+    cursor.execute(sql)
+    conn.commit()
+    if cursor.rowcount == 1:
+        flash(f"User deleted successfully!")
+    else:
+        flash("Error occurred while performing the operation")
+    return redirect(url_for("show_users"))
+
 @app.route("/admin/profile/<user_id>")
 def profile(user_id):
     sql  = "SELECT * FROM user_tbl WHERE user_id='"+user_id+"'"
