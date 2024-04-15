@@ -73,7 +73,7 @@
           >
           <a
             href="{{ url_for('delete_user', user_id=user[0] ) }}"
-            class="btn btn-danger"
+            class="btn btn-danger {{ 'disabled' if user[4] == 'Admin' }}"
             >Delete User</a
           >
         </div>

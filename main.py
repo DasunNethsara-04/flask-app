@@ -51,6 +51,7 @@ def login():
                 #user exists
                 if bcrypt.check_password_hash(result[3], str(usr_pwd)):
                     session['EMAIL'] = usr_email
+                    session['USER_ID'] = result[0]
                     session['IS_LOGGED_IN'] = True
                     return redirect(url_for("admin_dashboard"))
                 else:
