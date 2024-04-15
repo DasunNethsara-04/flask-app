@@ -1,4 +1,8 @@
-{% extends 'index.html' %} {% block content %} {% if success %}
+{% extends 'index.html' %}
+
+<!-- title block -->
+{% block header %} {% block title %}Login{% endblock %} {% endblock %} {% block
+content %} {% if success %}
 <script>
   Swal.fire({
     title: "Done",
