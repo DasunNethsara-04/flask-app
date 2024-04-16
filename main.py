@@ -34,10 +34,6 @@ def about_us():
 def contact_us():
     return render_template("Contact.html")
 
-@app.route("/<usr_data>")
-def test(usr_data):
-    return usr_data
-
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
